@@ -635,7 +635,7 @@ ReferenceExchange.prototype._matchWithTheirs = function(ourOrder, theirOrder)  {
     // they have bought Cntr (using the base they already paid when creating the order)
      this._creditFundsCntr(theirOrder.client, matchCntr);
   }
-  let theirStillRemainingBase = theirOrder.sizeBase.minus(theirOrder.executedBase);
+  var theirStillRemainingBase = theirOrder.sizeBase.minus(theirOrder.executedBase);
   if (theirStillRemainingBase.lt(this.baseMinRemainingSize)) {
     this._refundUnmatchedAndFinish(theirOrder, 'Done', 'None');
     this._raiseEvent({
