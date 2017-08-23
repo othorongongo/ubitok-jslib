@@ -354,6 +354,11 @@ exports.computeEncodedOrderId = function(date, randomHex) {
   return new BigNumber(hex, 16);
 };
 
+exports.generateEncodedOrderIdAt = function(date) {
+  var fullUuidWithoutDashes = uuidv4().replace(/-/g, '');
+  return exports.computeEncodedOrderId(date, fullUuidWithoutDashes);
+};
+
 exports.generateEncodedOrderId = function() {
   // Want to:
   //  - minimise storage costs
@@ -370,6 +375,10 @@ exports.generateEncodedOrderId = function() {
 
 exports.generateDecodedOrderId = function() {
   return exports.decodeOrderId(exports.generateEncodedOrderId());
+};
+
+exports.generateDecodedOrderIdAt = function(date) {
+  return exports.decodeOrderId(exports.generateEncodedOrderIdAt(date));
 };
 
 exports.deliberatelyInvalidEncodedOrderId = function() {

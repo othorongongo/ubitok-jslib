@@ -202,7 +202,7 @@ ReferenceExchange.prototype.createOrder = function(client, orderId, price, sizeB
     return;
   }
   var sizeCntr = this.computeAmountCntr(sizeBase, price);
-  if (sizeCntr < this.cntrMinInitialSize || sizeCntr.gte(this.cntrMaxSize)) {
+  if (sizeCntr.lt(this.cntrMinInitialSize) || sizeCntr.gte(this.cntrMaxSize)) {
     order.status = 'Rejected';
     order.reasonCode = 'InvalidSize';
     return;
