@@ -79,26 +79,137 @@ ReferenceExchange.prototype.getOwnCntrBalance = function(client) {
   return this._getOrDflt(this.ownCntrForClient, client, this.bigZero);
 };
 
+// demo/test only
 ReferenceExchange.prototype.depositBaseForTesting = function(client, amountBase) {
   this._creditFundsBase(client, amountBase);
 };
 
+// demo/test only
 ReferenceExchange.prototype.depositCntrForTesting = function(client, amountCntr)  {
   this._creditFundsCntr(client, amountCntr);
 };
 
-ReferenceExchange.prototype._creditFundsBase = function(client, amountBase)  {
-  if (!this.balanceBaseForClient.hasOwnProperty(client)) {
-    this.balanceBaseForClient[client] = this.bigZero;
+ReferenceExchange.prototype.setBalancesForTesting = function(client, balanceBase, balanceCntr, balanceRwrd, ownBase, ownCntr, ownRwrd)  {
+  this.balanceBaseForClient[client] = balanceBase;
+  this.balanceCntrForClient[client] = balanceCntr;
+  this.balanceRwrdForClient[client] = balanceRwrd;
+  this.ownBaseForClient[client] = ownBase;
+  this.ownCntrForClient[client] = ownCntr;
+  this.ownRwrdForClient[client] = ownRwrd;
+};
+
+// demo/test only - would normally be the base token that has this method!
+ReferenceExchange.prototype.baseTokenApprove = function(client, amountBase)  {
+  var existingApprovedAmount = this.approvedBaseForClient[client];
+  if (!existingApprovedAmount) {
+    this.approvedBaseForClient[client] = this.bigZero;
+  } else if (!existingApprovedAmount.isZero()) {
+    // TODO - hang on, what if they want to set it to zero?
+    throw new Error("must set approved amount to zero before changing");
   }
-  this.balanceBaseForClient[client] = this.balanceBaseForClient[client].add(amountBase);
+  var ownBalanceBase = this.ownBaseForClient[client];
+  if (!ownBalanceBase || ownBalanceBase.lt(amountBase)) {
+    throw new Error("insufficient base funds in own address");
+  }
+  this._creditFunds(this.ownBaseForClient, client, amountBase.negated());
+  this._creditFunds(this.approvedBaseForClient, client, amountBase);
+};
+
+ReferenceExchange.prototype.transferFromBase = function(client)  {
+  var amountBase = this.approvedBaseForClient[client];
+  if (!amountBase || amountBase.lte(this.bigZero)) {
+    throw new Error("approved amount must be strictly positive");
+  }
+  this._creditFunds(this.approvedBaseForClient, client, amountBase.negated());
+  this._creditFundsBase(client, amountBase);
+  // TODO - raise event
+};
+
+ReferenceExchange.prototype.transferBase = function(client, amountBase)  {
+  var balanceBase = this.balanceBaseForClient[client];
+  if (!balanceBase || balanceBase.lt(amountBase)) {
+    throw new Error("insufficient base funds in book");
+  }
+  this._creditFunds(this.ownBaseForClient, client, amountBase);
+  this._creditFundsBase(client, amountBase.negated());
+  // TODO - raise event
+};
+
+// real one doesn't need an amountCntr param 'cos part of msg
+ReferenceExchange.prototype.depositCntr = function(client, amountCntr)  {
+  var ownBalanceCntr = this.ownCntrForClient[client];
+  if (!ownBalanceCntr || ownBalanceCntr.lt(amountCntr)) {
+    throw new Error("insufficient cntr funds in own address");
+  }
+  this._creditFunds(this.ownCntrForClient, client, amountCntr.negated());
+  this._creditFundsCntr(client, amountCntr);
+  // TODO - raise event
+};
+
+ReferenceExchange.prototype.withdrawCntr = function(client, amountCntr)  {
+  var balanceCntr = this.balanceCntrForClient[client];
+  if (!balanceCntr || balanceCntr.lt(amountCntr)) {
+    throw new Error("insufficient cntr funds in book");
+  }
+  this._creditFunds(this.ownCntrForClient, client, amountCntr);
+  this._creditFundsCntr(client, amountCntr.negated());
+  // TODO - raise event
+};
+
+// demo/test only - would normally be the reward token that has this method!
+ReferenceExchange.prototype.rwrdTokenApprove = function(client, amountRwrd)  {
+  var existingApprovedAmount = this.approvedRwrdForClient[client];
+  if (!existingApprovedAmount) {
+    this.approvedRwrdForClient[client] = this.bigZero;
+  } else if (!existingApprovedAmount.isZero()) {
+    // TODO - hang on, what if they want to set it to zero?
+    throw new Error("must set approved amount to zero before changing");
+  }
+  var ownBalanceRwrd = this.ownRwrdForClient[client];
+  if (!ownBalanceRwrd || ownBalanceRwrd.lt(amountRwrd)) {
+    throw new Error("insufficient rwrd funds in own address");
+  }
+  this._creditFunds(this.ownRwrdForClient, client, amountRwrd.negated());
+  this._creditFunds(this.approvedRwrdForClient, client, amountRwrd);
+};
+
+ReferenceExchange.prototype.transferFromRwrd = function(client)  {
+  var amountRwrd = this.approvedRwrdForClient[client];
+  if (!amountRwrd || amountRwrd.lte(this.bigZero)) {
+    throw new Error("approved amount must be strictly positive");
+  }
+  this._creditFunds(this.approvedRwrdForClient, client, amountRwrd.negated());
+  this._creditFundsRwrd(client, amountRwrd);
+  // TODO - raise event
+};
+
+ReferenceExchange.prototype.transferRwrd = function(client, amountRwrd)  {
+  var balanceRwrd = this.balanceRwrdForClient[client];
+  if (!balanceRwrd || balanceRwrd.lt(amountRwrd)) {
+    throw new Error("insufficient rwrd funds in book");
+  }
+  this._creditFunds(this.ownRwrdForClient, client, amountRwrd);
+  this._creditFundsBase(client, amountRwrd.negated());
+  // TODO - raise event
+};
+
+ReferenceExchange.prototype._creditFunds = function(balanceMap, client, amount)  {
+  if (!balanceMap.hasOwnProperty(client)) {
+    balanceMap[client] = this.bigZero;
+  }
+  balanceMap[client] = balanceMap[client].add(amount);
+};
+
+ReferenceExchange.prototype._creditFundsBase = function(client, amountBase)  {
+  this._creditFunds(this.balanceBaseForClient, client, amountBase);
 };
 
 ReferenceExchange.prototype._creditFundsCntr = function(client, amountCntr)  {
-  if (!this.balanceCntrForClient.hasOwnProperty(client)) {
-    this.balanceCntrForClient[client] = this.bigZero;
-  }
-  this.balanceCntrForClient[client] = this.balanceCntrForClient[client].add(amountCntr);
+  this._creditFunds(this.balanceCntrForClient, client, amountCntr);
+};
+
+ReferenceExchange.prototype._creditFundsRwrd = function(client, amountRwrd)  {
+  this._creditFunds(this.balanceRwrdForClient, client, amountRwrd);
 };
 
 ReferenceExchange.prototype.walkBook = function(fromPrice) {
