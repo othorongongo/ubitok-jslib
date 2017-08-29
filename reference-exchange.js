@@ -99,20 +99,17 @@ ReferenceExchange.prototype.setBalancesForTesting = function(client, balanceBase
 };
 
 // demo/test only - would normally be the base token that has this method!
-ReferenceExchange.prototype.baseTokenApprove = function(client, amountBase)  {
+ReferenceExchange.prototype.baseTokenApprove = function(client, newApprovedAmount)  {
   var existingApprovedAmount = this.approvedBaseForClient[client];
   if (!existingApprovedAmount) {
     this.approvedBaseForClient[client] = this.bigZero;
-  } else if (!existingApprovedAmount.isZero()) {
-    // TODO - hang on, what if they want to set it to zero?
-    throw new Error("must set approved amount to zero before changing");
+    existingApprovedAmount = this.bigZero;
   }
-  var ownBalanceBase = this.ownBaseForClient[client];
-  if (!ownBalanceBase || ownBalanceBase.lt(amountBase)) {
-    throw new Error("insufficient base funds in own address");
+  if (!existingApprovedAmount.isZero() && !newApprovedAmount.isZero()) {
+    throw new Error("must set approved amount to zero before changing to non-zero amount");
   }
-  this._creditFunds(this.ownBaseForClient, client, amountBase.negated());
-  this._creditFunds(this.approvedBaseForClient, client, amountBase);
+  // perhaps surprisingly this doesn't check or affect balance
+  this.approvedBaseForClient[client] = newApprovedAmount;
 };
 
 ReferenceExchange.prototype.transferFromBase = function(client)  {
@@ -157,20 +154,17 @@ ReferenceExchange.prototype.withdrawCntr = function(client, amountCntr)  {
 };
 
 // demo/test only - would normally be the reward token that has this method!
-ReferenceExchange.prototype.rwrdTokenApprove = function(client, amountRwrd)  {
+ReferenceExchange.prototype.rwrdTokenApprove = function(client, newApprovedAmount)  {
   var existingApprovedAmount = this.approvedRwrdForClient[client];
   if (!existingApprovedAmount) {
     this.approvedRwrdForClient[client] = this.bigZero;
-  } else if (!existingApprovedAmount.isZero()) {
-    // TODO - hang on, what if they want to set it to zero?
-    throw new Error("must set approved amount to zero before changing");
+    existingApprovedAmount = this.bigZero;
   }
-  var ownBalanceRwrd = this.ownRwrdForClient[client];
-  if (!ownBalanceRwrd || ownBalanceRwrd.lt(amountRwrd)) {
-    throw new Error("insufficient rwrd funds in own address");
+  if (!existingApprovedAmount.isZero() && !newApprovedAmount.isZero()) {
+    throw new Error("must set approved amount to zero before changing to non-zero amount");
   }
-  this._creditFunds(this.ownRwrdForClient, client, amountRwrd.negated());
-  this._creditFunds(this.approvedRwrdForClient, client, amountRwrd);
+  // perhaps surprisingly this doesn't check or affect balance
+  this.approvedRwrdForClient[client] = newApprovedAmount;
 };
 
 ReferenceExchange.prototype.transferFromRwrd = function(client)  {
