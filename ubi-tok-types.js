@@ -416,7 +416,8 @@ exports.decodeWalkClientOrder = function (order) {
     reasonCode: exports.decodeReasonCode(order[5]),
     rawExecutedBase: order[6],
     rawExecutedCntr: order[7],
-    rawFees: order[8]
+    rawFeesBaseOrCntr: order[8],
+    rawFeesRwrd: order[9]
   };
 };
 
@@ -432,7 +433,8 @@ exports.decodeOrder = function (orderId, order) {
     reasonCode: exports.decodeReasonCode(order[5]),
     rawExecutedBase: order[6],
     rawExecutedCntr: order[7],
-    rawFees: order[8]
+    rawFeesBaseOrCntr: order[8],
+    rawFeesRwrd: order[9]
   };
 };
 
@@ -444,7 +446,8 @@ exports.decodeOrderState = function (orderId, state) {
     reasonCode: exports.decodeReasonCode(state[1]),
     rawExecutedBase: state[2],
     rawExecutedCntr: state[3],
-    rawFees: state[4]
+    rawFeesBaseOrCntr: order[4],
+    rawFeesRwrd: order[5]
   };
 };
 

@@ -120,6 +120,7 @@ ReferenceExchange.prototype.transferFromBase = function(client)  {
     throw new Error("approved amount must be strictly positive");
   }
   this._creditFunds(this.approvedBaseForClient, client, amountBase.negated());
+  this._creditFunds(this.ownBaseForClient, client, amountBase.negated());
   this._creditFundsBase(client, amountBase);
   // TODO - raise event
 };
@@ -175,6 +176,7 @@ ReferenceExchange.prototype.transferFromRwrd = function(client)  {
     throw new Error("approved amount must be strictly positive");
   }
   this._creditFunds(this.approvedRwrdForClient, client, amountRwrd.negated());
+  this._creditFunds(this.ownRwrdForClient, client, amountRwrd.negated());
   this._creditFundsRwrd(client, amountRwrd);
   // TODO - raise event
 };
