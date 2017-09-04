@@ -40,6 +40,8 @@ function ReferenceExchange() {
   this.baseMaxSize = new BigNumber('1e32');
   this.cntrMinInitialSize = new BigNumber('10000');
   this.cntrMaxSize = new BigNumber('1e32');
+  this.feesPer10K = 5;
+  this.ethRwrdRate = 100;
   this.events = [];
 }
 module.exports = ReferenceExchange;
@@ -192,6 +194,9 @@ ReferenceExchange.prototype._creditFunds = function(balanceMap, client, amount) 
     balanceMap[client] = this.bigZero;
   }
   balanceMap[client] = balanceMap[client].add(amount);
+  if (balanceMap[client].lt(0)) {
+    throw new Error("balances should never go negative");
+  }
 };
 
 ReferenceExchange.prototype._creditFundsBase = function(client, amountBase)  {
@@ -293,7 +298,8 @@ ReferenceExchange.prototype.createOrder = function(client, orderId, price, sizeB
     reasonCode: 'None',
     executedBase : this.bigZero,
     executedCntr : this.bigZero,
-    fees: this.bigZero // TODO - out of date
+    feesBaseOrCntr: this.bigZero,
+    feesRwrd: this.bigZero
   };
   this.orderForOrderId[orderId] = order;
   if (!this._isValidPrice(order.price)) {
@@ -560,18 +566,27 @@ ReferenceExchange.prototype._processOrder = function(order, maxMatches)  {
   }
   var theirPriceEnd = this.oppositePrice(order.price);
   var matchStopReason = this._matchAgainstBook(order, theirPriceStart, theirPriceEnd, maxMatches);
-  // TODO - pay fees with rwrd balance
   if (order.executedBase.gt(ourOriginalExecutedBase)) {
-    if (this._isBuyPrice(order.price)) {
-      var liquidityTakenBase = order.executedBase.minus(ourOriginalExecutedBase);
-      var feesBase = liquidityTakenBase.times(0.0005).floor();
+    var liquidityTakenBase = order.executedBase.minus(ourOriginalExecutedBase);
+    var liquidityTakenCntr = order.executedCntr.minus(ourOriginalExecutedCntr);
+    // Clients can use their reward tokens to pay fees.
+    var feesRwrd = liquidityTakenCntr.times(this.feesPer10K).dividedToIntegerBy(10000).times(this.ethRwrdRate);
+    if (feesRwrd.lte(this.getClientBalances(order.client)[2])) {
+      this._creditFundsRwrd(order.client, feesRwrd.negated());
+      if (this._isBuyPrice(order.price)) {
+        this._creditFundsBase(order.client, liquidityTakenBase);
+      } else {
+        this._creditFundsCntr(order.client, liquidityTakenCntr);
+      }
+      order.feesRwrd = order.feesRwrd.add(feesRwrd);
+    } else if (this._isBuyPrice(order.price)) {
+      var feesBase = liquidityTakenBase.times(this.feesPer10K).dividedToIntegerBy(10000);
       this._creditFundsBase(order.client, liquidityTakenBase.minus(feesBase));
-      order.fees = order.fees.add(feesBase);
+      order.feesBaseOrCntr = order.feesBaseOrCntr.add(feesBase);
     } else {
-      var liquidityTakenCntr = order.executedCntr.minus(ourOriginalExecutedCntr);
-      var feesCntr = liquidityTakenCntr.times(0.0005).floor();
+      var feesCntr = liquidityTakenCntr.times(this.feesPer10K).dividedToIntegerBy(10000);
       this._creditFundsCntr(order.client, liquidityTakenCntr.minus(feesCntr));
-      order.fees = order.fees.add(feesCntr);
+      order.feesBaseOrCntr = order.feesBaseOrCntr.add(feesCntr);
     }
   }
   if (order.terms === 'ImmediateOrCancel') {
@@ -584,6 +599,8 @@ ReferenceExchange.prototype._processOrder = function(order, maxMatches)  {
     } else if (matchStopReason === 'BookExhausted') {
       this._refundUnmatchedAndFinish(order, 'Done', 'Unmatched');
       return;
+    } else {
+      throw new Error("internal error");
     }
   } else if (order.terms === 'MakerOnly') {
     if (matchStopReason === 'MaxMatches') {
@@ -592,6 +609,8 @@ ReferenceExchange.prototype._processOrder = function(order, maxMatches)  {
     } else if (matchStopReason === 'BookExhausted') {
       this._enterOrder(order);
       return;
+    } else {
+      throw new Error("internal error");
     }
   } else if (order.terms === 'GTCNoGasTopup') {
     if (matchStopReason === 'Satisfied') {
@@ -603,6 +622,8 @@ ReferenceExchange.prototype._processOrder = function(order, maxMatches)  {
     } else if (matchStopReason === 'BookExhausted') {
       this._enterOrder(order);
       return;
+    } else {
+      throw new Error("internal error");
     }
   } else if (order.terms === 'GTCWithGasTopup') {
     if (matchStopReason === 'Satisfied') {
@@ -614,7 +635,11 @@ ReferenceExchange.prototype._processOrder = function(order, maxMatches)  {
     } else if (matchStopReason === 'BookExhausted') {
       this._enterOrder(order);
       return;
+    } else {
+      throw new Error("internal error");
     }
+  } else {
+    throw new Error("unknown terms " + order.terms);
   }
 };
 

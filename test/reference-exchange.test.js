@@ -1,6 +1,7 @@
 // Tests for the reference exchange in isolation.
-// We mostly test it in conjuction with the contract, but it's
-// useful to prototype some tests here (and test semi-internal bits).
+// These tests aren't exhaustive - we mostly test it in conjuction with the contract,
+// (see tests in ubitok-contracts repo) but it's useful to prototype some tests here
+// (and test semi-internal bits, and quickly check it looks ok before pushing out).
 
 var expect    = require("chai").expect;
 var ReferenceExchange = require("../reference-exchange");
