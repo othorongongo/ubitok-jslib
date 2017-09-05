@@ -446,8 +446,8 @@ exports.decodeOrderState = function (orderId, state) {
     reasonCode: exports.decodeReasonCode(state[1]),
     rawExecutedBase: state[2],
     rawExecutedCntr: state[3],
-    rawFeesBaseOrCntr: order[4],
-    rawFeesRwrd: order[5]
+    rawFeesBaseOrCntr: state[4],
+    rawFeesRwrd: state[5]
   };
 };
 
