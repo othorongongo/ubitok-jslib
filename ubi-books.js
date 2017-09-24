@@ -32,10 +32,10 @@ exports.networkInfo = {
   }
 };
 
-// TODO - danger - the decimals setting isn't actually used yet
+// TODO - danger - the decimals setting isn't actually respected by UI yet
 
 exports.bookInfo = {
-  "DEMO/ETH" : {
+  "DEMO-ETH" : {
     networkId: "demo",
     bookAddress: "n/a",
     bookAbiArray: [],
@@ -65,7 +65,7 @@ exports.bookInfo = {
       abiArray: [],
     }
   },
-  "TESTR/ETH" : {
+  "TESTR-ETH" : {
     networkId: "3",
     bookAddress: "0x297ad00cf67aa1dcfc2c952b15502fa9e1910cee",
     bookAbiArray: BookERC20EthV1AbiArray,
