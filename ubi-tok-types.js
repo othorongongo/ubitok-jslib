@@ -342,7 +342,7 @@ exports.validateAmount = function(friendlyAmount, decimals) {
   if (friendlyAmount === undefined || friendlyAmount.trim() === "") {
     return ["error", "Amount is blank"];
   }
-  let number = new BigNumber(NaN);
+  var number = new BigNumber(NaN);
   try {
     number = new BigNumber(friendlyAmount);
   } catch (e) {
@@ -354,7 +354,7 @@ exports.validateAmount = function(friendlyAmount, decimals) {
   if (number.decimalPlaces() > 10) {
     return ["error", "Amount has too many decimal places"];
   }
-  let encodedAmount = exports.encodeAmount(friendlyAmount, decimals);
+  var encodedAmount = exports.encodeAmount(friendlyAmount, decimals);
   if (encodedAmount.lt("0")) {
     return ["error", "Amount cannot be negative"];
   }
