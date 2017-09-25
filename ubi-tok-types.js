@@ -54,6 +54,12 @@ var enumMarketOrderEventType = [
   'PartialFill'
 ];
 
+var enumClientOrderEventType = [
+  'Create',
+  'Continue',
+  'Cancel'
+];
+
 function encodeEnum(enumNamedValues, namedValue) {
   var idx = enumNamedValues.indexOf(namedValue);
   if (idx === -1) {
@@ -107,6 +113,10 @@ exports.decodeReasonCode = function (encodedReasonCode) {
 
 exports.decodeMarketOrderEventType = function (encodedMarketOrderEventType) {
   return decodeEnum(enumMarketOrderEventType, encodedMarketOrderEventType);
+};
+
+exports.decodeClientOrderEventType = function (encodedClientOrderEventType) {
+  return decodeEnum(enumClientOrderEventType, encodedClientOrderEventType);
 };
 
 // TODO - need to find sensible way to allow these to vary
@@ -328,6 +338,32 @@ exports.encodeRwrdAmount = function(friendlyAmount, decimals) {
   return exports.encodeAmount(friendlyAmount, exports.rwrdDecimals);
 };
 
+exports.validateAmount = function(friendlyAmount, decimals) {
+  if (friendlyAmount === undefined || friendlyAmount.trim() === "") {
+    return ["error", "Amount is blank"];
+  }
+  let number = new BigNumber(NaN);
+  try {
+    number = new BigNumber(friendlyAmount);
+  } catch (e) {
+    // will detect NaN in next step
+  }
+  if (number.isNaN() || !number.isFinite()) {
+    return ["error", "Amount does not look like a regular number"];
+  }
+  if (number.decimalPlaces() > 10) {
+    return ["error", "Amount has too many decimal places"];
+  }
+  let encodedAmount = exports.encodeAmount(friendlyAmount, decimals);
+  if (encodedAmount.lt("0")) {
+    return ["error", "Amount cannot be negative"];
+  }
+  if (encodedAmount.gte("1e30")) {
+    return ["error", "Amount is too large"];
+  }
+  return ["ok", ""];
+}
+
 exports.decodeOrderId = function(rawOrderId) {
   // pad to allow string ordering comparison
   // 128 bits needs 25 base36 digits
@@ -463,5 +499,17 @@ exports.decodeMarketOrderEvent = function(result) {
       pricePacked: result.args.price.toNumber(),
       rawDepthBase: result.args.depthBase,
       rawTradeBase: result.args.tradeBase
+  };
+};
+
+// Suitable for use with a callback from an eth.filter watching for ClientOrderEvent.
+exports.decodeClientOrderEvent = function(result) {
+  return {
+      blockNumber: result.blockNumber,
+      logIndex: result.logIndex,
+      eventRemoved: result.removed,
+      clientOrderEventType: exports.decodeClientOrderEventType(result.args.clientOrderEventType),
+      orderId: exports.decodeOrderId(result.args.orderId),
+      client: result.args.client
   };
 };

@@ -1,8 +1,12 @@
 // Lists all the books offered by UbiTok.io.
 //
 
-var BookERC20EthV1AbiArray =
+var BookERC20EthV0p9AbiArray =
 [{"constant":true,"inputs":[{"name":"fromPrice","type":"uint16"}],"name":"walkBook","outputs":[{"name":"price","type":"uint16"},{"name":"depthBase","type":"uint256"},{"name":"orderCount","type":"uint256"},{"name":"blockNumber","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"orderId","type":"uint128"}],"name":"getOrder","outputs":[{"name":"client","type":"address"},{"name":"price","type":"uint16"},{"name":"sizeBase","type":"uint256"},{"name":"terms","type":"uint8"},{"name":"status","type":"uint8"},{"name":"reasonCode","type":"uint8"},{"name":"executedBase","type":"uint256"},{"name":"executedCntr","type":"uint256"},{"name":"feesBaseOrCntr","type":"uint256"},{"name":"feesRwrd","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"amountCntr","type":"uint256"}],"name":"withdrawCntr","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"getBookInfo","outputs":[{"name":"_bookType","type":"uint8"},{"name":"_baseToken","type":"address"},{"name":"_rwrdToken","type":"address"},{"name":"_baseMinInitialSize","type":"uint256"},{"name":"_cntrMinInitialSize","type":"uint256"},{"name":"_feePer10K","type":"uint256"},{"name":"_feeCollector","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"orderId","type":"uint128"}],"name":"getOrderState","outputs":[{"name":"status","type":"uint8"},{"name":"reasonCode","type":"uint8"},{"name":"executedBase","type":"uint256"},{"name":"executedCntr","type":"uint256"},{"name":"feesBaseOrCntr","type":"uint256"},{"name":"feesRwrd","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"amountBase","type":"uint256"}],"name":"transferBase","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"amountRwrd","type":"uint256"}],"name":"transferRwrd","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"depositCntr","outputs":[],"payable":true,"type":"function"},{"constant":false,"inputs":[],"name":"transferFromBase","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"client","type":"address"}],"name":"getClientBalances","outputs":[{"name":"bookBalanceBase","type":"uint256"},{"name":"bookBalanceCntr","type":"uint256"},{"name":"bookBalanceRwrd","type":"uint256"},{"name":"approvedBalanceBase","type":"uint256"},{"name":"approvedBalanceRwrd","type":"uint256"},{"name":"ownBalanceBase","type":"uint256"},{"name":"ownBalanceRwrd","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"newFeeCollector","type":"address"}],"name":"changeFeeCollector","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"transferFromRwrd","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"client","type":"address"},{"name":"maybeLastOrderIdReturned","type":"uint128"},{"name":"minClosedOrderIdCutoff","type":"uint128"}],"name":"walkClientOrders","outputs":[{"name":"orderId","type":"uint128"},{"name":"price","type":"uint16"},{"name":"sizeBase","type":"uint256"},{"name":"terms","type":"uint8"},{"name":"status","type":"uint8"},{"name":"reasonCode","type":"uint8"},{"name":"executedBase","type":"uint256"},{"name":"executedCntr","type":"uint256"},{"name":"feesBaseOrCntr","type":"uint256"},{"name":"feesRwrd","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"orderId","type":"uint128"},{"name":"price","type":"uint16"},{"name":"sizeBase","type":"uint256"},{"name":"terms","type":"uint8"},{"name":"maxMatches","type":"uint256"}],"name":"createOrder","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"orderId","type":"uint128"},{"name":"maxMatches","type":"uint256"}],"name":"continueOrder","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"orderId","type":"uint128"}],"name":"cancelOrder","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_baseToken","type":"address"},{"name":"_rwrdToken","type":"address"}],"name":"init","outputs":[],"payable":false,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"client","type":"address"},{"indexed":false,"name":"clientPaymentEventType","type":"uint8"},{"indexed":false,"name":"balanceType","type":"uint8"},{"indexed":false,"name":"clientBalanceDelta","type":"int256"}],"name":"ClientPaymentEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"client","type":"address"},{"indexed":false,"name":"clientOrderEventType","type":"uint8"},{"indexed":false,"name":"orderId","type":"uint128"}],"name":"ClientOrderEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"eventTimestamp","type":"uint256"},{"indexed":true,"name":"orderId","type":"uint128"},{"indexed":false,"name":"marketOrderEventType","type":"uint8"},{"indexed":false,"name":"price","type":"uint16"},{"indexed":false,"name":"depthBase","type":"uint256"},{"indexed":false,"name":"tradeBase","type":"uint256"}],"name":"MarketOrderEvent","type":"event"}]
+      ;
+
+var BookERC20EthV1AbiArray =
+[{"constant":true,"inputs":[{"name":"fromPrice","type":"uint16"}],"name":"walkBook","outputs":[{"name":"price","type":"uint16"},{"name":"depthBase","type":"uint256"},{"name":"orderCount","type":"uint256"},{"name":"blockNumber","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"orderId","type":"uint128"}],"name":"getOrder","outputs":[{"name":"client","type":"address"},{"name":"price","type":"uint16"},{"name":"sizeBase","type":"uint256"},{"name":"terms","type":"uint8"},{"name":"status","type":"uint8"},{"name":"reasonCode","type":"uint8"},{"name":"executedBase","type":"uint256"},{"name":"executedCntr","type":"uint256"},{"name":"feesBaseOrCntr","type":"uint256"},{"name":"feesRwrd","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"amountCntr","type":"uint256"}],"name":"withdrawCntr","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"getBookInfo","outputs":[{"name":"_bookType","type":"uint8"},{"name":"_baseToken","type":"address"},{"name":"_rwrdToken","type":"address"},{"name":"_baseMinInitialSize","type":"uint256"},{"name":"_cntrMinInitialSize","type":"uint256"},{"name":"_feeDivisor","type":"uint256"},{"name":"_feeCollector","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"orderId","type":"uint128"}],"name":"getOrderState","outputs":[{"name":"status","type":"uint8"},{"name":"reasonCode","type":"uint8"},{"name":"executedBase","type":"uint256"},{"name":"executedCntr","type":"uint256"},{"name":"feesBaseOrCntr","type":"uint256"},{"name":"feesRwrd","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"amountBase","type":"uint256"}],"name":"transferBase","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"amountRwrd","type":"uint256"}],"name":"transferRwrd","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"depositCntr","outputs":[],"payable":true,"type":"function"},{"constant":false,"inputs":[],"name":"transferFromBase","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"client","type":"address"}],"name":"getClientBalances","outputs":[{"name":"bookBalanceBase","type":"uint256"},{"name":"bookBalanceCntr","type":"uint256"},{"name":"bookBalanceRwrd","type":"uint256"},{"name":"approvedBalanceBase","type":"uint256"},{"name":"approvedBalanceRwrd","type":"uint256"},{"name":"ownBalanceBase","type":"uint256"},{"name":"ownBalanceRwrd","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"newFeeCollector","type":"address"}],"name":"changeFeeCollector","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"transferFromRwrd","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"client","type":"address"},{"name":"maybeLastOrderIdReturned","type":"uint128"},{"name":"minClosedOrderIdCutoff","type":"uint128"}],"name":"walkClientOrders","outputs":[{"name":"orderId","type":"uint128"},{"name":"price","type":"uint16"},{"name":"sizeBase","type":"uint256"},{"name":"terms","type":"uint8"},{"name":"status","type":"uint8"},{"name":"reasonCode","type":"uint8"},{"name":"executedBase","type":"uint256"},{"name":"executedCntr","type":"uint256"},{"name":"feesBaseOrCntr","type":"uint256"},{"name":"feesRwrd","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"orderId","type":"uint128"},{"name":"price","type":"uint16"},{"name":"sizeBase","type":"uint256"},{"name":"terms","type":"uint8"},{"name":"maxMatches","type":"uint256"}],"name":"createOrder","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"orderId","type":"uint128"},{"name":"maxMatches","type":"uint256"}],"name":"continueOrder","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"orderId","type":"uint128"}],"name":"cancelOrder","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_baseToken","type":"address"},{"name":"_rwrdToken","type":"address"}],"name":"init","outputs":[],"payable":false,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"client","type":"address"},{"indexed":false,"name":"clientPaymentEventType","type":"uint8"},{"indexed":false,"name":"balanceType","type":"uint8"},{"indexed":false,"name":"clientBalanceDelta","type":"int256"}],"name":"ClientPaymentEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"client","type":"address"},{"indexed":false,"name":"clientOrderEventType","type":"uint8"},{"indexed":false,"name":"orderId","type":"uint128"}],"name":"ClientOrderEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"eventTimestamp","type":"uint256"},{"indexed":true,"name":"orderId","type":"uint128"},{"indexed":false,"name":"marketOrderEventType","type":"uint8"},{"indexed":false,"name":"price","type":"uint16"},{"indexed":false,"name":"depthBase","type":"uint256"},{"indexed":false,"name":"tradeBase","type":"uint256"}],"name":"MarketOrderEvent","type":"event"}]
       ;
 
 var niceERC20TokenAbiArray =
@@ -39,7 +43,7 @@ exports.bookInfo = {
     networkId: "demo",
     bookAddress: "n/a",
     bookAbiArray: [],
-    symbol: "DEMO/ETH",
+    symbol: "DEMO-ETH",
     base: {
       tradableType: "ERC20",
       symbol: "DEMO",
@@ -68,8 +72,8 @@ exports.bookInfo = {
   "TESTR-ETH" : {
     networkId: "3",
     bookAddress: "0x297ad00cf67aa1dcfc2c952b15502fa9e1910cee",
-    bookAbiArray: BookERC20EthV1AbiArray,
-    symbol: "TESTR/ETH",
+    bookAbiArray: BookERC20EthV0p9AbiArray,
+    symbol: "TESTR-ETH",
     base: {
       tradableType: "ERC20",
       symbol: "TESTR",
@@ -92,6 +96,36 @@ exports.bookInfo = {
       decimals: 18,
       name: "Test UbiTok.io Reward Token",
       address: "0x5cfad634865157a5a988d743e6fcb4514e655460",
+      abiArray: niceERC20TokenAbiArray,
+    }
+  },
+  "OMG-ETH" : {
+    networkId: "1",
+    bookAddress: "0x8216deae8744a0286c8c53d8f237b65f661644e3",
+    bookAbiArray: BookERC20EthV1AbiArray,
+    symbol: "OMG-ETH",
+    base: {
+      tradableType: "ERC20",
+      symbol: "OMG",
+      decimals: 18,
+      name: "OmiseGO",
+      address: "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "0.1"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
       abiArray: niceERC20TokenAbiArray,
     }
   }
