@@ -35,13 +35,13 @@ function ReferenceExchange() {
 
   this.orderForOrderId = {};
   this.orderChainForPrice = {};
-  this.baseMinRemainingSize = new BigNumber('10');
-  this.baseMinInitialSize = new BigNumber('100');
+  this.baseMinRemainingSize = new BigNumber('10000000000000000');
+  this.baseMinInitialSize = new BigNumber('100000000000000000');
   this.baseMaxSize = new BigNumber('1e32');
-  this.cntrMinInitialSize = new BigNumber('10000');
+  this.cntrMinInitialSize = new BigNumber('10000000000000000');
   this.cntrMaxSize = new BigNumber('1e32');
   this.feesPer10K = 5;
-  this.ethRwrdRate = 100;
+  this.ethRwrdRate = 1000;
   this.events = [];
 }
 module.exports = ReferenceExchange;
