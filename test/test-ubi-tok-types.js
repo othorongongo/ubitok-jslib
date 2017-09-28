@@ -17,6 +17,18 @@ describe("UbiTokTypes", function() {
       expect(recoveredDate.getTime(), 'date extracted from order id').to.equal(exampleDate.getTime());
     });
   });
+  describe("Price Packing", function() {
+    it("decodes known prices", function() {
+      let uut = UbiTokTypes;
+      expect(uut.decodePrice(1)).to.equal("Buy @ 999000");
+      expect(uut.decodePrice(5376)).to.equal("Buy @ 1.24");
+      expect(uut.decodePrice(5400)).to.equal("Buy @ 1.00");
+      expect(uut.decodePrice(10800)).to.equal("Buy @ 0.00000100");
+      expect(uut.decodePrice(10801)).to.equal("Sell @ 0.00000100");
+      expect(uut.decodePrice(16201)).to.equal("Sell @ 1.00");
+      expect(uut.decodePrice(21600)).to.equal("Sell @ 999000");
+    });
+  });
   describe("Price Parsing", function() {
     it("parses prices", function() {
       let uut = UbiTokTypes;
