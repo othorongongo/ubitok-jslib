@@ -99,6 +99,36 @@ exports.bookInfo = {
       abiArray: niceERC20TokenAbiArray,
     }
   },
+  "TESTI-ETH" : {
+    networkId: "4",
+    bookAddress: "0xa4f552dab0fcb48dd8e3db45f239172592f94cd0",
+    bookAbiArray: BookERC20EthV0p9AbiArray,
+    symbol: "TESTI-ETH",
+    base: {
+      tradableType: "ERC20",
+      symbol: "TESTI",
+      decimals: 18,
+      name: "Test Token (Rinkeby)",
+      address: "0xce3fba94168812793f7082794302a089510b8711",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "0.1"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Test Ether (Rinkeby)",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "Test Ubi Reward Token (Rinkeby)",
+      address: "0x76316acf8c8628c6df4730492e62a36ca00995d1",
+      abiArray: niceERC20TokenAbiArray,
+    }
+  },
   "OMG-ETH" : {
     networkId: "1",
     bookAddress: "0x8216deae8744a0286c8c53d8f237b65f661644e3",
