@@ -24,6 +24,11 @@ exports.networkInfo = {
     name: "Ropsten Test Network",
     liveness: "TEST"
   },
+  "4": {
+    networkId: "4",
+    name: "Rinkeby Test Network",
+    liveness: "TEST"
+  },
   "42": {
     networkId: "42",
     name: "Kovan Test Network",
