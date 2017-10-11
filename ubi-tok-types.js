@@ -361,7 +361,7 @@ exports.validateAmount = function(friendlyAmount, decimals) {
   if (encodedAmount.gte("1e30")) {
     return ["error", "Amount is too large"];
   }
-  return ["ok", ""];
+  return ["success", ""];
 }
 
 exports.decodeOrderId = function(rawOrderId) {
