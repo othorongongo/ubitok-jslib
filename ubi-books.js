@@ -136,9 +136,43 @@ exports.bookInfo = {
   },
   "OMG-ETH" : {
     networkId: "1",
-    bookAddress: "0x8216deae8744a0286c8c53d8f237b65f661644e3",
+    bookAddress: "0xf8d15960aa6Aaf5972DC54cF002951553906C7bd",
     bookAbiArray: BookERC20EthV1AbiArray,
     symbol: "OMG-ETH",
+    bookStartBlock: 4402394,
+    olderVersions: ["OMG-ETH.v01"],
+    base: {
+      tradableType: "ERC20",
+      symbol: "OMG",
+      decimals: 18,
+      name: "OmiseGO",
+      address: "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "0.1"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
+  },
+  "OMG-ETH.v01" : {
+    networkId: "1",
+    bookAddress: "0x8216deae8744a0286c8c53d8f237b65f661644e3",
+    bookAbiArray: BookERC20EthV1AbiArray,
+    symbol: "OMG-ETH.v01",
+    bookStartBlock: 4311371,
+    newerVersion: "OMG-ETH",
     base: {
       tradableType: "ERC20",
       symbol: "OMG",
