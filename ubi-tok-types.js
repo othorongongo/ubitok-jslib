@@ -510,6 +510,7 @@ exports.decodeClientOrderEvent = function(result) {
       eventRemoved: result.removed,
       clientOrderEventType: exports.decodeClientOrderEventType(result.args.clientOrderEventType),
       orderId: exports.decodeOrderId(result.args.orderId),
-      client: result.args.client
+      client: result.args.client,
+      maxMatches: result.args.maxMatches // can be undefined for very old book contracts
   };
 };
