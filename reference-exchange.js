@@ -15,9 +15,15 @@ var BigNumber = require('bignumber.js');
 //
 // Currently limiting ourselves to ES5 here - perhaps should transpile?
 //
-function ReferenceExchange() {
+function ReferenceExchange(baseMinInitialSize, minPriceExponent) {
   if (!(this instanceof ReferenceExchange)) {
     throw new Error("constructor used as function");
+  }
+  if (baseMinInitialSize === undefined) {
+    baseMinInitialSize = '100000000000000000';
+  }
+  if (minPriceExponent === undefined) {
+    minPriceExponent = -5; // not yet used ...
   }
 
   this.bigZero = new BigNumber(0);
@@ -36,7 +42,7 @@ function ReferenceExchange() {
   this.orderForOrderId = {};
   this.orderChainForPrice = {};
   this.baseMinRemainingSize = new BigNumber('10000000000000000');
-  this.baseMinInitialSize = new BigNumber('100000000000000000');
+  this.baseMinInitialSize = new BigNumber(baseMinInitialSize);
   this.baseMaxSize = new BigNumber('1e32');
   this.cntrMinInitialSize = new BigNumber('10000000000000000');
   this.cntrMaxSize = new BigNumber('1e32');

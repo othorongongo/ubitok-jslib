@@ -119,13 +119,20 @@ exports.decodeClientOrderEventType = function (encodedClientOrderEventType) {
   return decodeEnum(enumClientOrderEventType, encodedClientOrderEventType);
 };
 
-// TODO - need to find sensible way to allow these to vary
+// Min Price Exponent controls the range of prices possible.
+// This is rather confusing when baseDecimals != 18;
+// the actual minimumPriceExponent in the contract must be set appropriately
+// for baseDecimals since it affects the token-wei:wei price.
+// However for the price conversions we do here, we work in the friendlier
+// token:eth price space, so we don't need to care about baseDecimals -
+// provided of course that the actual minimumPriceExponent in the contract
+// is equal to the effectiveMinimumPriceExponent + (baseDecimals-cntrlDecimals).
+// Phew.
+var effectiveMinimumPriceExponent = -5;
 
-exports.baseDecimals = 18;
 exports.cntrDecimals = 18;
 exports.rwrdDecimals = 18;
 
-exports.minimumPriceExponent = -5;
 exports.invalidPricePacked = 0;
 exports.maxBuyPricePacked = 1;
 exports.minBuyPricePacked = 10800;
@@ -142,13 +149,13 @@ exports.encodePrice = function (friendlyPrice) {
   if (direction === 'Invalid') {
      return 0;
   }
-  if (exponent < exports.minimumPriceExponent || exponent > exports.minimumPriceExponent + 11) {
+  if (exponent < effectiveMinimumPriceExponent || exponent > effectiveMinimumPriceExponent + 11) {
     return 0;
   }
   if (mantissa < 100 || mantissa > 999) {
     return 0;
   }
-  var zeroBasedExponent = exponent - exports.minimumPriceExponent;
+  var zeroBasedExponent = exponent - effectiveMinimumPriceExponent;
   var zeroBasedMantissa = mantissa - 100;
   var priceIndex = zeroBasedExponent * 900 + zeroBasedMantissa;
   var sidedPriceIndex = (direction === 'Buy') ? exports.minBuyPricePacked - priceIndex : exports.minSellPricePacked + priceIndex;
@@ -175,7 +182,7 @@ exports.decodePrice = function (packedPrice) {
   var zeroBasedMantissa = priceIndex % 900;
   var zeroBasedExponent = Math.floor(priceIndex / 900 + 1e-6);
   var mantissa = zeroBasedMantissa + 100;
-  var exponent = zeroBasedExponent + exports.minimumPriceExponent;
+  var exponent = zeroBasedExponent + effectiveMinimumPriceExponent;
   var mantissaDigits = '' + mantissa; // 100 - 999
   var friendlyPricePart;
   if (exponent === -5) {
@@ -314,19 +321,25 @@ exports.encodeAmount = function(friendlyAmount, decimals) {
   return new BigNumber(friendlyAmount).times('1e' + decimals);
 };
 
-exports.decodeBaseAmount = function(amountWei) {
-  return exports.decodeAmount(amountWei, exports.baseDecimals);
+exports.decodeBaseAmount = function(amountWei, baseDecimals) {
+  if (baseDecimals === undefined) {
+    throw new Error("base decimals is compulsory");
+  }
+  return exports.decodeAmount(amountWei, baseDecimals);
 };
 
-exports.encodeBaseAmount = function(friendlyAmount, decimals) {
-  return exports.encodeAmount(friendlyAmount, exports.baseDecimals);
+exports.encodeBaseAmount = function(friendlyAmount, baseDecimals) {
+  if (baseDecimals === undefined) {
+    throw new Error("base decimals is compulsory");
+  }
+  return exports.encodeAmount(friendlyAmount, baseDecimals);
 };
 
 exports.decodeCntrAmount = function(amountWei) {
   return exports.decodeAmount(amountWei, exports.cntrDecimals);
 };
 
-exports.encodeCntrAmount = function(friendlyAmount, decimals) {
+exports.encodeCntrAmount = function(friendlyAmount) {
   return exports.encodeAmount(friendlyAmount, exports.cntrDecimals);
 };
 
@@ -334,7 +347,7 @@ exports.decodeRwrdAmount = function(amountWei) {
   return exports.decodeAmount(amountWei, exports.rwrdDecimals);
 };
 
-exports.encodeRwrdAmount = function(friendlyAmount, decimals) {
+exports.encodeRwrdAmount = function(friendlyAmount) {
   return exports.encodeAmount(friendlyAmount, exports.rwrdDecimals);
 };
 
@@ -429,24 +442,24 @@ exports.extractClientDateFromDecodedOrderId = function(friendlyOrderId) {
 };
 
 // Suitable for use with getClientBalances().
-exports.decodeClientBalances = function (result) {
+exports.decodeClientBalances = function (result, baseDecimals) {
   return {
-    exchangeBase: exports.decodeBaseAmount(result[0]),
+    exchangeBase: exports.decodeBaseAmount(result[0], baseDecimals),
     exchangeCntr: exports.decodeCntrAmount(result[1]),
     exchangeRwrd: exports.decodeRwrdAmount(result[2]),
-    approvedBase: exports.decodeBaseAmount(result[3]),
+    approvedBase: exports.decodeBaseAmount(result[3], baseDecimals),
     approvedRwrd: exports.decodeRwrdAmount(result[4]),
-    ownBase: exports.decodeBaseAmount(result[5]),
+    ownBase: exports.decodeBaseAmount(result[5], baseDecimals),
     ownRwrd: exports.decodeRwrdAmount(result[6])
   };
 };
 
 // Suitable for use with walkClientOrders().
-exports.decodeWalkClientOrder = function (order) {
+exports.decodeWalkClientOrder = function (order, baseDecimals) {
   return {
     orderId: exports.decodeOrderId(order[0]),
     price: exports.decodePrice(order[1]),
-    sizeBase: exports.decodeBaseAmount(order[2]),
+    sizeBase: exports.decodeBaseAmount(order[2], baseDecimals),
     terms: exports.decodeTerms(order[3]),
     status: exports.decodeStatus(order[4]),
     reasonCode: exports.decodeReasonCode(order[5]),
@@ -458,12 +471,12 @@ exports.decodeWalkClientOrder = function (order) {
 };
 
 // Suitable for use with getOrder().
-exports.decodeOrder = function (orderId, order) {
+exports.decodeOrder = function (orderId, order, baseDecimals) {
   return {
     orderId: orderId,
     client: order[0],
     price: exports.decodePrice(order[1]),
-    sizeBase: exports.decodeBaseAmount(order[2]),
+    sizeBase: exports.decodeBaseAmount(order[2], baseDecimals),
     terms: exports.decodeTerms(order[3]),
     status: exports.decodeStatus(order[4]),
     reasonCode: exports.decodeReasonCode(order[5]),
@@ -511,6 +524,6 @@ exports.decodeClientOrderEvent = function(result) {
       clientOrderEventType: exports.decodeClientOrderEventType(result.args.clientOrderEventType),
       orderId: exports.decodeOrderId(result.args.orderId),
       client: result.args.client,
-      maxMatches: result.args.maxMatches // can be undefined for very old book contracts
+      maxMatches: result.args.maxMatches // can be undefined for very old book contracts, can be a string
   };
 };
