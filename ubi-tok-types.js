@@ -364,7 +364,7 @@ exports.validateAmount = function(friendlyAmount, decimals) {
   if (number.isNaN() || !number.isFinite()) {
     return ["error", "Amount does not look like a regular number"];
   }
-  if (number.decimalPlaces() > 10) {
+  if (number.decimalPlaces() > decimals) {
     return ["error", "Amount has too many decimal places"];
   }
   var encodedAmount = exports.encodeAmount(friendlyAmount, decimals);
