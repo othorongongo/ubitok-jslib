@@ -235,5 +235,99 @@ exports.bookInfo = {
       address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
       abiArray: niceERC20TokenAbiArray,
     }
+  },
+  "eBTC-ETH" : {
+    networkId: "1",
+    bookAddress: "0x2cc6a8f865a71e69c9bc9931c486b6d1cbd90e15",
+    bookAbiArray: BookERC20EthV1DecAbiArray,
+    symbol: "eBTC-ETH",
+    bookStartBlock: 4509772,
+    base: {
+      tradableType: "ERC20",
+      symbol: "eBTC",
+      decimals: 8,
+      name: "eBTC",
+      address: "0xeB7C20027172E5d143fB030d50f91Cece2D1485D",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0",
+      notes: "This is the new eBTC token following the token swap on 2017-10-30."
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
+  },
+  "SALT-ETH" : {
+    networkId: "1",
+    bookAddress: "0x2d492254d5bef8db7555ce3defe0cbf9efedd5fb",
+    bookAbiArray: BookERC20EthV1DecAbiArray,
+    symbol: "SALT-ETH",
+    bookStartBlock: 4509772,
+    base: {
+      tradableType: "ERC20",
+      symbol: "SALT",
+      decimals: 8,
+      name: "SALT",
+      address: "0x4156D3342D5c385a87D264F90653733592000581",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
+  },
+  "STORJ-ETH" : {
+    networkId: "1",
+    bookAddress: "0x2fa277f06d5caee292e870986cdc8a06499a632c",
+    bookAbiArray: BookERC20EthV1DecAbiArray,
+    symbol: "STORJ-ETH",
+    bookStartBlock: 4509772,
+    base: {
+      tradableType: "ERC20",
+      symbol: "STORJ",
+      decimals: 8,
+      name: "Storj",
+      address: "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
   }
 };
