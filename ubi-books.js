@@ -329,5 +329,36 @@ exports.bookInfo = {
       address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
       abiArray: niceERC20TokenAbiArray,
     }
+  },
+  "BOLD-ETH" : {
+    networkId: "1",
+    bookAddress: "0x182f2b554462230735699df74ec9606a3c4c0684",
+    bookAbiArray: BookERC20EthV1DecAbiArray,
+    symbol: "BOLD-ETH",
+    bookStartBlock: 4537651,
+    base: {
+      tradableType: "ERC20",
+      symbol: "BOLD",
+      decimals: 8,
+      name: "Bold",
+      address: "0x7cdEC53Fe4770729dac314756c10E2F37b8d2B2f",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "0.1"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
   }
 };
