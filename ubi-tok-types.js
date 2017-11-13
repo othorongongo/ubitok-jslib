@@ -1,6 +1,8 @@
 // Conversion functions for talking to the BookERC20EthV1 contract.
 //
-// Currently limiting ourselves to ES5 here - perhaps should transpile?
+// TODO - Currently limiting ourselves to ES5 here - perhaps should transpile?
+// TODO - Having to pass baseDecimals and priceRangeAdjustment about is ugly,
+//        plus doesn't handle cntrDecimals != 18 ...
 //
 
 var BigNumber = require('bignumber.js');
@@ -126,9 +128,12 @@ exports.decodeClientOrderEventType = function (encodedClientOrderEventType) {
 // However for the price conversions we do here, we work in the friendlier
 // token:eth price space, so we don't need to care about baseDecimals -
 // provided of course that the actual minimumPriceExponent in the contract
-// is equal to the effectiveMinimumPriceExponent + (baseDecimals-cntrlDecimals).
-// Phew.
-var effectiveMinimumPriceExponent = -5;
+// is equal to:
+//   unadjustedEffectiveMinimumPriceExponent + (baseDecimals-cntrlDecimals) + priceRangeAdjustment.
+// Note that priceRangeAdjustment is set per book - typical values might be
+// 0 for high value tokens, -3 for low value.
+// Phew - we've made this far too complicated!
+var unadjustedEffectiveMinimumPriceExponent = -5;
 
 exports.cntrDecimals = 18;
 exports.rwrdDecimals = 18;
@@ -139,16 +144,23 @@ exports.minBuyPricePacked = 10800;
 exports.minSellPricePacked = 10801;
 exports.maxSellPricePacked = 21600;
 
-// e.g. 'Buy @ 1.00' -> 5401
+// e.g. 'Buy @ 1.00', 0 -> 5401
 //
-exports.encodePrice = function (friendlyPrice) {
-  var splitPrice = exports.splitFriendlyPrice(friendlyPrice);
+exports.encodePrice = function (friendlyPrice, priceRangeAdjustment) {
+  if (priceRangeAdjustment === undefined) {
+    throw new Error('priceRangeAdjustment is now mandatory');
+  }
+  if (priceRangeAdjustment < -3 || priceRangeAdjustment > 0) {
+    throw new Error('priceRangeAdjustment must be between -3 and 0');
+  }
+  var splitPrice = exports.splitFriendlyPrice(friendlyPrice, priceRangeAdjustment);
   var direction = splitPrice[0];
   var mantissa = splitPrice[1];
   var exponent = splitPrice[2];
   if (direction === 'Invalid') {
      return 0;
   }
+  var effectiveMinimumPriceExponent = unadjustedEffectiveMinimumPriceExponent + priceRangeAdjustment;
   if (exponent < effectiveMinimumPriceExponent || exponent > effectiveMinimumPriceExponent + 11) {
     return 0;
   }
@@ -162,9 +174,15 @@ exports.encodePrice = function (friendlyPrice) {
   return sidedPriceIndex;
 };
 
-// e.g. 5401 -> 'Buy @ 1.00'
+// e.g. 5401, 0 -> 'Buy @ 1.00'
 //
-exports.decodePrice = function (packedPrice) {
+exports.decodePrice = function (packedPrice, priceRangeAdjustment) {
+  if (priceRangeAdjustment === undefined) {
+    throw new Error('priceRangeAdjustment is now mandatory');
+  }
+  if (priceRangeAdjustment < -3 || priceRangeAdjustment > 0) {
+    throw new Error('priceRangeAdjustment must be between -3 and 0');
+  }
   if (packedPrice.toNumber) {
     packedPrice = packedPrice.toNumber();
   }
@@ -182,10 +200,17 @@ exports.decodePrice = function (packedPrice) {
   var zeroBasedMantissa = priceIndex % 900;
   var zeroBasedExponent = Math.floor(priceIndex / 900 + 1e-6);
   var mantissa = zeroBasedMantissa + 100;
+  var effectiveMinimumPriceExponent = unadjustedEffectiveMinimumPriceExponent + priceRangeAdjustment;
   var exponent = zeroBasedExponent + effectiveMinimumPriceExponent;
   var mantissaDigits = '' + mantissa; // 100 - 999
   var friendlyPricePart;
-  if (exponent === -5) {
+  if (exponent === -8) {
+    friendlyPricePart = '0.00000000' + mantissaDigits;
+  } else if (exponent === -7) {
+    friendlyPricePart = '0.0000000' + mantissaDigits;
+  } else if (exponent === -6) {
+    friendlyPricePart = '0.000000' + mantissaDigits;
+  } else if (exponent === -5) {
     friendlyPricePart = '0.00000' + mantissaDigits;
   } else if (exponent === -4) {
     friendlyPricePart = '0.0000' + mantissaDigits;
@@ -209,6 +234,8 @@ exports.decodePrice = function (packedPrice) {
     friendlyPricePart = mantissaDigits + '00';
   } else if (exponent === 6) {
     friendlyPricePart = mantissaDigits + '000';
+  } else {
+    return 'Invalid';
   }
   return direction + ' @ ' + friendlyPricePart;
 };
@@ -219,11 +246,12 @@ exports.decodePrice = function (packedPrice) {
 //   error = { msg: 'problem description', suggestion: 'optional replacement'}
 //   result = [ direction, mantissa, exponent ]
 // where direction = Buy/Sell, mantissa is a number from 100-999, exponent is
-// a number from -5 to 6 as used by the book contract's packed price format.
+// a number from (-5 + priceRangeAdjustment) to (6 + priceRangeAdjustment).
+// Note that the exponent is NOT adjusted by priceRangeAdjustment.
 //
-// e.g. ('Buy', '12.3') -> [undefined, ['Buy', 123, 2]]
+// e.g. ('Buy', '12.3', 0) -> [undefined, ['Buy', 123, 2]]
 //
-exports.parseFriendlyPricePart = function(direction, pricePart)  {
+exports.parseFriendlyPricePart = function(direction, pricePart, priceRangeAdjustment)  {
   if (direction !== 'Buy' && direction !== 'Sell') {
     return [{msg: 'has an unknown problem'}, undefined];
   }
@@ -246,16 +274,16 @@ exports.parseFriendlyPricePart = function(direction, pricePart)  {
   if (number.isNaN() || !number.isFinite()) {
     return [{msg: 'does not look like a regular number'}, undefined];
   }
-  var minPrice = new BigNumber('0.000001');
-  var maxPrice = new BigNumber('999000');
+  var minPrice = new BigNumber('0.100').times(new BigNumber('10').pow(-5 + priceRangeAdjustment));
+  var maxPrice = new BigNumber('0.999').times(new BigNumber('10').pow( 6 + priceRangeAdjustment));
   if (number.lt(minPrice)) {
     return [{msg: 'is too small', suggestion: minPrice.toFixed()}, undefined];
   }
   if (number.gt(maxPrice)) {
     return [{msg: 'is too large', suggestion: maxPrice.toFixed()}, undefined];
   }
-  var currentPower = new BigNumber('1000000');
-  for (var exponent = 6; exponent >= -5; exponent--) {
+  var currentPower = new BigNumber('10').pow(6 + priceRangeAdjustment);
+  for (var exponent = 6 + priceRangeAdjustment; exponent >= -5 + priceRangeAdjustment; exponent--) {
     if (number.gte(currentPower.times('0.1'))) {
       var rawMantissa = number.div(currentPower);
       var mantissa = rawMantissa.mul(1000);
@@ -277,9 +305,9 @@ exports.parseFriendlyPricePart = function(direction, pricePart)  {
   return [{msg: 'has an unknown problem'}, undefined];
 };
 
-// e.g. 'Buy @ 12.3' -> ['Buy', 123, 2]
+// e.g. ('Buy @ 12.3', 0) -> ['Buy', 123, 2]
 //
-exports.splitFriendlyPrice = function(price)  {
+exports.splitFriendlyPrice = function(price, priceRangeAdjustment)  {
   var invalidSplitPrice = ['Invalid', 0, 0];
   if (!price.startsWith) {
     return invalidSplitPrice;
@@ -295,7 +323,7 @@ exports.splitFriendlyPrice = function(price)  {
   } else {
     return invalidSplitPrice;
   }
-  var errorAndResult = exports.parseFriendlyPricePart(direction, pricePart);
+  var errorAndResult = exports.parseFriendlyPricePart(direction, pricePart, priceRangeAdjustment);
   if (errorAndResult[0]) {
     return invalidSplitPrice;
   } else {
@@ -455,10 +483,10 @@ exports.decodeClientBalances = function (result, baseDecimals) {
 };
 
 // Suitable for use with walkClientOrders().
-exports.decodeWalkClientOrder = function (order, baseDecimals) {
+exports.decodeWalkClientOrder = function (order, baseDecimals, priceRangeAdjustment) {
   return {
     orderId: exports.decodeOrderId(order[0]),
-    price: exports.decodePrice(order[1]),
+    price: exports.decodePrice(order[1], priceRangeAdjustment),
     sizeBase: exports.decodeBaseAmount(order[2], baseDecimals),
     terms: exports.decodeTerms(order[3]),
     status: exports.decodeStatus(order[4]),
@@ -471,11 +499,11 @@ exports.decodeWalkClientOrder = function (order, baseDecimals) {
 };
 
 // Suitable for use with getOrder().
-exports.decodeOrder = function (orderId, order, baseDecimals) {
+exports.decodeOrder = function (orderId, order, baseDecimals, priceRangeAdjustment) {
   return {
     orderId: orderId,
     client: order[0],
-    price: exports.decodePrice(order[1]),
+    price: exports.decodePrice(order[1], priceRangeAdjustment),
     sizeBase: exports.decodeBaseAmount(order[2], baseDecimals),
     terms: exports.decodeTerms(order[3]),
     status: exports.decodeStatus(order[4]),
