@@ -408,5 +408,37 @@ exports.bookInfo = {
       address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
       abiArray: niceERC20TokenAbiArray,
     }
+  },
+  "WOCO-ETH" : {
+    networkId: "1",
+    bookAddress: "0x05bfc9ef2836f0f883da06bace39ae8e2fbf998b",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "WOCO-ETH",
+    bookStartBlock: 4553895,
+    priceRangeAdjustment: -2,
+    base: {
+      tradableType: "ERC20",
+      symbol: "WOCO",
+      decimals: 18,
+      name: "Women Coin",
+      address: "0x86230462ce9048B24C8aAAABD74Ac02088a956Ea",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
   }
 };
