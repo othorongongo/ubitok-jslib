@@ -440,5 +440,37 @@ exports.bookInfo = {
       address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
       abiArray: niceERC20TokenAbiArray,
     }
+  },
+  "GEN-ETH" : {
+    networkId: "1",
+    bookAddress: "0x5d8613dec639810a4aa6ca5beaba33aea0ab806f",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "GEN-ETH",
+    bookStartBlock: 4559886,
+    priceRangeAdjustment: -3,
+    base: {
+      tradableType: "ERC20",
+      symbol: "GEN",
+      decimals: 18,
+      name: "Genesis",
+      address: "0x9dfe4643c04078a46803edcc30a3291b76d4c20c",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "10.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
   }
 };
