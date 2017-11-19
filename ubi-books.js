@@ -472,5 +472,101 @@ exports.bookInfo = {
       address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
       abiArray: niceERC20TokenAbiArray,
     }
+  },
+  "ETHFM-ETH" : {
+    networkId: "1",
+    bookAddress: "0x557d4876870952d5779645818d3529551fdd24be",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "ETHFM-ETH",
+    bookStartBlock: 4584605,
+    priceRangeAdjustment: -3,
+    base: {
+      tradableType: "ERC20",
+      symbol: "ETHFM",
+      decimals: 18,
+      name: "Ethereum Fundme",
+      address: "0x84ce2FcED3fFEd8C3A3e305d6cCf6f542a7cA006",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "10.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    },
+    "TDM-ETH" : {
+      networkId: "1",
+      bookAddress: "INVALID",
+      bookAbiArray: BookERC20EthV1p1AbiArray,
+      symbol: "ETHFM-ETH",
+      bookStartBlock: 4584605,
+      priceRangeAdjustment: -3,
+      base: {
+        tradableType: "ERC20",
+        symbol: "TDM",
+        decimals: 8,
+        name: "Token of Digital Money",
+        address: "0x7b6e57D2139dD5F38012cd641CEBB8AFf0d8953a",
+        abiArray: niceERC20TokenAbiArray,
+        minInitialSize: "10.0"
+      },
+      cntr: {
+        tradableType: "Ether",
+        symbol: "ETH",
+        decimals: 18,
+        name: "Ether",
+        minInitialSize: "0.01"
+      },
+      rwrd: {
+        tradableType: "ERC20",
+        symbol: "UBI",
+        decimals: 18,
+        name: "UbiTok.io Reward Token",
+        address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+        abiArray: niceERC20TokenAbiArray,
+      }
+    }
+  },
+  "EXMR-ETH": {
+    networkId: "1",
+    bookAddress: "0x0783e1ab0f36512ca4b1c883a98cbea98566946d",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "EXMR-ETH",
+    bookStartBlock: 4584605,
+    priceRangeAdjustment: -3,
+    base: {
+      tradableType: "ERC20",
+      symbol: "EXMR",
+      decimals: 8,
+      name: "EXMR",
+      address: "0xc98e0639c6d2ec037a615341c369666b110e80e5",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "10.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
   }
 };
