@@ -568,5 +568,133 @@ exports.bookInfo = {
       address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
       abiArray: niceERC20TokenAbiArray,
     }
+  },
+  "TDM-ETH": {
+    networkId: "1",
+    bookAddress: "0xa4a7caf1c04a9e3d4edd61f24e42c95b4527c819",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "TDM-ETH",
+    bookStartBlock: 4603032,
+    priceRangeAdjustment: -3,
+    base: {
+      tradableType: "ERC20",
+      symbol: "TDM",
+      decimals: 8,
+      name: "Token of Digital Money",
+      address: "0x7b6e57D2139dD5F38012cd641CEBB8AFf0d8953a",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
+  },
+  "EBCH-ETH": {
+    networkId: "1",
+    bookAddress: "0xf05a3e4e864689eb20f0e27454b76da02589f638",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "EBCH-ETH",
+    bookStartBlock: 4584605,
+    priceRangeAdjustment: -3,
+    base: {
+      tradableType: "ERC20",
+      symbol: "EBCH",
+      decimals: 8,
+      name: "eBitcoinCash",
+      address: "0xafc39788c51f0c1ff7b55317f3e70299e521fff6",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
+  },
+  "RBTC-ETH": {
+    networkId: "1",
+    bookAddress: "0x617690b272b48627169cb02a71f462c1dc78dd9b",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "RBTC-ETH",
+    bookStartBlock: 4584605,
+    priceRangeAdjustment: -3,
+    base: {
+      tradableType: "ERC20",
+      symbol: "RBTC",
+      decimals: 0,
+      name: "Bitcoin Revolution",
+      address: "0xf6f61f70ae1c4559459899300b17d2b2c77d39b5",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "100"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
+  },
+  "DUMMY-ETH": {
+    networkId: "1",
+    bookAddress: "0x0",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "DUMMY-ETH",
+    bookStartBlock: 4584605,
+    priceRangeAdjustment: 9999999,
+    base: {
+      tradableType: "ERC20",
+      symbol: "DUMMY",
+      decimals: 9999999,
+      name: "DUMMY",
+      address: "0x0",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
   }
 };
