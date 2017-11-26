@@ -665,19 +665,51 @@ exports.bookInfo = {
       abiArray: niceERC20TokenAbiArray,
     }
   },
-  "DUMMY-ETH": {
+  "YOLO-ETH": {
     networkId: "1",
-    bookAddress: "0x0",
+    bookAddress: "0x300f516cda4475660ed27bf87bb49b95da8ba0e0",
     bookAbiArray: BookERC20EthV1p1AbiArray,
-    symbol: "DUMMY-ETH",
-    bookStartBlock: 4584605,
-    priceRangeAdjustment: 9999999,
+    symbol: "YOLO-ETH",
+    bookStartBlock: 4624380,
+    priceRangeAdjustment: -3,
     base: {
       tradableType: "ERC20",
-      symbol: "DUMMY",
-      decimals: 9999999,
-      name: "DUMMY",
-      address: "0x0",
+      symbol: "YOLO",
+      decimals: 0,
+      name: "YOLOCOIN",
+      address: "0x07C5b1E4391fCdFC6c12548448aeEe30A3793079",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
+  },
+  "FUDD-ETH": {
+    networkId: "1",
+    bookAddress: "0xc36b7ce1BFA6981A56fF72a63D32bc4371921a69",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "FUDD-ETH",
+    bookStartBlock: 4624380,
+    priceRangeAdjustment: -3,
+    base: {
+      tradableType: "ERC20",
+      symbol: "FUDD",
+      decimals: 8,
+      name: "DimonCoin",
+      address: "0xde39e5e5a1b0eeb3afe717d6d011cae88d19451e",
       abiArray: niceERC20TokenAbiArray,
       minInitialSize: "1.0"
     },
