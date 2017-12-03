@@ -728,5 +728,70 @@ exports.bookInfo = {
       address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
       abiArray: niceERC20TokenAbiArray,
     }
-  }
+  },
+  "SSN-ETH": {
+    networkId: "1",
+    bookAddress: "0xb91c30cad0ef0aad42044aa3b6fbf1b2e3ddf903",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "SSN-ETH",
+    bookStartBlock: 4663593,
+    priceRangeAdjustment: -3,
+    base: {
+      tradableType: "ERC20",
+      symbol: "SSN",
+      decimals: 8,
+      name: "SSENTE",
+      address: "0x6b14C373C24556165002A00Cba4174FD96FE28f0",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
+  },
+  "GOAL-ETH": {
+    networkId: "1",
+    bookAddress: "0xFd5cD7acA07A154BA10f5B7705954551de0e0e11",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "GOAL-ETH",
+    bookStartBlock: 4663593,
+    priceRangeAdjustment: -3,
+    warning: "ICO on-going (token supply may change), not for sale to citizens of USA, Singapore, and China.",
+    base: {
+      tradableType: "ERC20",
+      symbol: "GOAL",
+      decimals: 18,
+      name: "GOAL Bonanza",
+      address: "0x7b69b78cc7fee48202c208609ae6d1f78ce42e13",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
+  } 
 };
