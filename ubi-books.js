@@ -793,5 +793,134 @@ exports.bookInfo = {
       address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
       abiArray: niceERC20TokenAbiArray,
     }
-  } 
+  }, 
+  "PBIT-ETH": {
+    networkId: "1",
+    bookAddress: "0x296f01867605470510B8E373FB6d68bBD77Ec7F3",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "PBIT-ETH",
+    bookStartBlock: 4663593,
+    priceRangeAdjustment: -3,
+    base: {
+      tradableType: "ERC20",
+      symbol: "PBIT",
+      decimals: 8,
+      name: "PeraBit",
+      address: "0xb395bb199f4b31232274a2889b266a37ea64b1a3",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
+  },
+  "AXYS-ETH": {
+    networkId: "1",
+    bookAddress: "0x19f5811582bbFFAf06964d19766aa810AB1B1AA7",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "AXYS-ETH",
+    bookStartBlock: 4663593,
+    priceRangeAdjustment: -3,
+    base: {
+      tradableType: "ERC20",
+      symbol: "AXYS",
+      decimals: 8,
+      name: "Axys",
+      address: "0xD4Deb869dF652A8756B6417aaf9Cb1f57b12A7f1",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
+  },
+  "HYTV-ETH": {
+    networkId: "1",
+    bookAddress: "0x32bd7caA4e1fDB3e5d47Cf650E710cE26BD7Ee62",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "HYTV-ETH",
+    bookStartBlock: 4663593,
+    priceRangeAdjustment: -3,
+    warning: "HyperTV token contract allows further minting of tokens",
+    base: {
+      tradableType: "ERC20",
+      symbol: "HYTV",
+      decimals: 3,
+      name: "HyperTV",
+      address: "0x7259fdDCA8d5F0184B3b12AA7e8401964B703a4F",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
+  },
+  "BTCL-ETH": {
+    networkId: "1",
+    bookAddress: "0xE4d155EA6107fAd9d20bc8aE0dEDf7638F073f66",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "BTCL-ETH",
+    bookStartBlock: 4663593,
+    priceRangeAdjustment: -3,
+    base: {
+      tradableType: "ERC20",
+      symbol: "BTCL",
+      decimals: 8,
+      name: "BTC LITE",
+      address: "0x5acD19b9c91e596b1f062f18e3D02da7eD8D1e50",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
+  }  
 };
