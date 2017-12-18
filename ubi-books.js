@@ -922,5 +922,38 @@ exports.bookInfo = {
       address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
       abiArray: niceERC20TokenAbiArray,
     }
+  },
+  "EAGLE-ETH": {
+    networkId: "1",
+    bookAddress: "0xdbafeb80598f6a7d382b2c456c3dade857f426de",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "EAGLE-ETH",
+    bookStartBlock: 4663593,
+    priceRangeAdjustment: -3,
+    warning: "this token contract (EAGLE) may allow new tokens to be created",
+    base: {
+      tradableType: "ERC20",
+      symbol: "EAGLE",
+      decimals: 18,
+      name: "EagleCoin",
+      address: "0x994f0dffdbae0bbf09b652d6f11a493fd33f42b9",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "UBI",
+      decimals: 18,
+      name: "UbiTok.io Reward Token",
+      address: "0xec2ca0ef7cbbb49d5305f2f85dda24a9c5eda305",
+      abiArray: niceERC20TokenAbiArray,
+    }
   }  
 };
