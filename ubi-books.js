@@ -280,6 +280,38 @@ exports.bookInfo = {
       abiArray: niceERC20TokenAbiArray,
     }
 },
+       "EAC-ETH": {
+    networkId: "1",
+    bookAddress: "0x0d33a58ee2cefbd04a94b24310ed51db994999a8",
+    bookAbiArray: BookERC20EthV1p1AbiArray,
+    symbol: "EAC-ETH",
+    bookStartBlock: 4603032,
+    priceRangeAdjustment: -3,
+    base: {
+      tradableType: "ERC20",
+      symbol: "EAC",
+      decimals: 18,
+      name: "Token of Digital Money",
+      address: "0xecd81de42deb4e298e752ea5c5549dce264e3f12",
+      abiArray: niceERC20TokenAbiArray,
+      minInitialSize: "1.0"
+    },
+    cntr: {
+      tradableType: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+      name: "Ether",
+      minInitialSize: "0.01"
+    },
+    rwrd: {
+      tradableType: "ERC20",
+      symbol: "EACO",
+      decimals: 18,
+      name: "EACO DUPS",
+      address: "0xecd81de42deb4e298e752ea5c5549dce264e3f12",
+      abiArray: niceERC20TokenAbiArray,
+    }
+},
   "eBTC-ETH" : {
     networkId: "1",
     bookAddress: "0x2cc6a8f865a71e69c9bc9931c486b6d1cbd90e15",
